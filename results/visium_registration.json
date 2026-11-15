@@ -1,0 +1,48 @@
+{
+ "score": 0.560215232715791,
+ "flip": false,
+ "ang": 278.0,
+ "scl": 1.05,
+ "vo": [
+  -3078.3259828088853,
+  -2960.262020401656
+ ],
+ "shift": [
+  1,
+  4
+ ],
+ "genes_tumour": [
+  "MLPH",
+  "FASN",
+  "EPCAM",
+  "ABCC11",
+  "GATA3",
+  "FOXA1",
+  "SCD",
+  "KRT8",
+  "SERHL2",
+  "ANKRD30A",
+  "CDH1",
+  "ELF3",
+  "CD9",
+  "MYO5B",
+  "LYPD3"
+ ],
+ "genes_stroma": [
+  "CCDC80",
+  "CXCL12",
+  "POSTN",
+  "LUM",
+  "IL7R",
+  "PTGDS",
+  "SFRP4",
+  "MMP2",
+  "PTPRC",
+  "FBLN1",
+  "ZEB2",
+  "PDGFRB",
+  "PDGFRA",
+  "CD3E",
+  "TRAC"
+ ]
+}

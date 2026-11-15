@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you refer to this work, please cite it as below."
+title: "SpatialTME-AI: A Ground-Truth Benchmark of Spatial Transcriptomics Deconvolution in Breast Cancer"
+authors:
+  - family-names: Naqvi
+    given-names: Husain
+version: 1.0.0
+date-released: 2026-11-16
+license: LicenseRef-All-Rights-Reserved
+repository-code: "https://github.com/Engr-HusainNaqvi/SpatialTME-AI"
+url: "https://engr-husainnaqvi.github.io/SpatialTME-AI/"
+keywords: [spatial transcriptomics, deconvolution, Visium, Xenium, single-cell RNA-seq, tumour microenvironment, breast cancer, graph neural network, benchmark]
+references:
+  - type: article
+    authors:
+      - family-names: Janesick
+        given-names: Amanda
+    title: "High resolution mapping of the tumor microenvironment using integrated single-cell, spatial and in situ analysis"
+    journal: "Nature Communications"
+    volume: 14
+    year: 2023
+    doi: 10.1038/s41467-023-43458-x

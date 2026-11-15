@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SpatialTME-AI Deconvolution</title>
+<meta name="description" content="Ground-truth benchmark of spatial-transcriptomics cell-type deconvolution in breast cancer, built from Xenium single-cell maps: a Poisson likelihood model beats cell2location, Stereoscope, Tangram and a simulation-trained graph neural network. Husain Naqvi, 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbfbfd;--fg:#14161a;--muted:#5b6170;--card:#ffffff;--line:#e6e8ee;--accent:#2563eb;--accent-soft:#e8efff;--warn:#b45309}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1116;--fg:#e8eaf0;--muted:#9aa1b2;--card:#161a22;--line:#262c38;--accent:#6ea0ff;--accent-soft:#1b2640;--warn:#f59e0b}}
+:root[data-theme="dark"]{--bg:#0e1116;--fg:#e8eaf0;--muted:#9aa1b2;--card:#161a22;--line:#262c38;--accent:#6ea0ff;--accent-soft:#1b2640;--warn:#f59e0b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 Inter,system-ui,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header{padding:56px 0 28px;border-bottom:1px solid var(--line)}
+.kicker{color:var(--accent);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:.3em 0;font-weight:800}
+.lead{font-size:clamp(17px,2.4vw,20px);color:var(--muted);max-width:800px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.btn{display:inline-block;padding:9px 16px;border-radius:8px;border:1px solid var(--line);color:var(--fg);text-decoration:none;font-weight:600;font-size:14px;background:var(--card)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+section{padding:36px 0;border-bottom:1px solid var(--line)}
+h2{font-size:24px;margin:0 0 12px}
+h3{font-size:18px;margin:22px 0 8px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.stat b{display:block;font-size:26px;color:var(--accent)}
+.stat span{color:var(--muted);font-size:13px}
+figure{margin:18px 0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px}
+figure img{width:100%;height:auto;display:block}
+figcaption{color:#555;font-size:13px;padding:6px 4px 0}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right}
+th:first-child,td:first-child{text-align:left}
+tr.best td{font-weight:700;color:var(--accent)}
+.note{background:var(--accent-soft);border-radius:10px;padding:14px 16px;margin:16px 0}
+.chain{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+.chain span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px}
+.chain span.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.chain i{color:var(--muted);font-style:normal}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+footer{padding:28px 0 48px;color:var(--muted);font-size:14px}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="kicker">Project 15 · Husain Naqvi · 2026</div>
+<h1>SpatialTME-AI: which deconvolution method recovers the true composition of real tissue?</h1>
+<p class="lead">One breast tumour profiled with Xenium (two sections), Visium and single-cell RNA-seq (Janesick et al. 2023). Summing labelled Xenium cells inside Visium-sized spots gives spots with real tissue structure and a known cell-type composition. Replicate 1 was used for every decision; replicate 2 was held out.</p>
+<div class="btns"><a class="btn primary" href="https://spatialtme-studio.streamlit.app/">Try the live app</a><a class="btn" href="https://github.com/Engr-HusainNaqvi/SpatialTME-AI/blob/main/docs/FINDINGS.md">Findings write-up</a><a class="btn" href="https://github.com/Engr-HusainNaqvi/SpatialTME-AI">GitHub repository</a></div>
+</div></header>
+<main class="wrap">
+<section>
+<h2>Headline</h2>
+<div class="stats">
+<div class="stat"><b>r = 0.852</b><span>GraphDecon mean per-type correlation on held-out spots, highest of all methods (0.854 without its platform factors)</span></div>
+<div class="stat"><b>+0.022</b><span>over cell2location (95% CI 0.014–0.030); +0.053 over NNLS</span></div>
+<div class="stat"><b>0.678</b><span>our pre-specified simulation-trained graph neural network: below NNLS</span></div>
+<div class="stat"><b>λ = 0</b><span>spatial smoothing was not chosen on development data</span></div>
+<div class="stat"><b>r ≤ 0.18</b><span>agreement of every method with the registered section on real Visium</span></div>
+</div>
+<div class="chain"><span>Xenium cells + labels</span><i>→</i><span class="on">55 µm pseudo-spots, known composition</span><i>→</i><span>10 methods</span><i>→</i><span class="on">held-out replicate</span><i>→</i><span>real Visium check</span></div>
+<div class="note"><b>Negative and mixed results, reported in full:</b>
+<ul>
+<li>SpotGNN, specified in advance, did not transfer from simulated to real spots. Its graph layers and domain adaptation did not help, and a post hoc revision was worse.</li>
+<li>Spatial smoothing (λ chosen on replicate 1 = 0) and per-gene platform factors (large, but removing them changes accuracy by &lt; 0.003) added nothing. GraphDecon's gain comes from the count likelihood.</li>
+<li>On real Visium, all methods agree only weakly with the adjacent section and cell2location and Stereoscope rank above GraphDecon.</li>
+</ul></div>
+</section>
+<section>
+<h2>Held-out benchmark (Xenium replicate 2, 55 µm, 2,715 spots)</h2>
+<div class="tbl"><table><thead><tr><th>Method</th><th>RMSE</th><th>Mean per-type r</th><th>Δr vs GraphDecon (block bootstrap 95% CI)</th></tr></thead><tbody><tr class="best"><td>GraphDecon: Poisson likelihood (λ = 0 chosen on Rep1)</td><td>0.094</td><td>0.852</td><td>—</td></tr><tr class=""><td>cell2location</td><td>0.111</td><td>0.830</td><td>+0.022 (0.014–0.030)</td></tr><tr class=""><td>NNLS + platform factors</td><td>0.090</td><td>0.819</td><td>+0.033 (0.025–0.042)</td></tr><tr class=""><td>NNLS</td><td>0.094</td><td>0.798</td><td>+0.053 (0.043–0.065)</td></tr><tr class=""><td>Stereoscope</td><td>0.134</td><td>0.777</td><td>+0.074 (0.060–0.088)</td></tr><tr class=""><td>MLP on unstructured simulations</td><td>0.158</td><td>0.727</td><td>+0.124 (0.114–0.134)</td></tr><tr class=""><td>Tangram</td><td>0.164</td><td>0.725</td><td>+0.127 (0.116–0.137)</td></tr><tr class=""><td>SpotGNN: simulation-trained GNN + domain adaptation (pre-specified)</td><td>0.203</td><td>0.678</td><td>+0.174 (0.158–0.190)</td></tr><tr class=""><td>SpotGNN v2 (post hoc)</td><td>0.259</td><td>0.338</td><td>+0.517 (0.487–0.550)</td></tr></tbody></table></div>
+</section>
+<section>
+<h2>Figures</h2>
+<figure><img loading="lazy" src="figures/fig1_benchmark.png" alt="Ground-truth benchmark on Xenium-derived 55 µm pseudo-spots. Circles: replicate 1 (development); squares: replicate 2 (held-out)."><figcaption>Ground-truth benchmark on Xenium-derived 55 µm pseudo-spots. Circles: replicate 1 (development); squares: replicate 2 (held-out).</figcaption></figure><figure><img loading="lazy" src="figures/fig2_per_type.png" alt="Per-cell-type correlation with truth on the held-out replicate. GraphDecon gains most on B cells and myoepithelial cells; cell2location is best for tumour and perivascular cells."><figcaption>Per-cell-type correlation with truth on the held-out replicate. GraphDecon gains most on B cells and myoepithelial cells; cell2location is best for tumour and perivascular cells.</figcaption></figure><figure><img loading="lazy" src="figures/fig3_maps_rep2.png" alt="Held-out replicate 2: true fractions from labelled Xenium cells, and GraphDecon and NNLS estimates."><figcaption>Held-out replicate 2: true fractions from labelled Xenium cells, and GraphDecon and NNLS estimates.</figcaption></figure><figure><img loading="lazy" src="figures/fig4_robustness.png" alt="The ranking holds at 100 µm spots and with the 5′ reference."><figcaption>The ranking holds at 100 µm spots and with the 5′ reference.</figcaption></figure><figure><img loading="lazy" src="figures/fig5_visium.png" alt="Real Visium: every method agrees only weakly with the registered adjacent Xenium section (cell2location best, 0.175). Right: six tumour-microenvironment niches."><figcaption>Real Visium: every method agrees only weakly with the registered adjacent Xenium section (cell2location best, 0.175). Right: six tumour-microenvironment niches.</figcaption></figure>
+</section>
+<section><p style="color:var(--muted);font-size:14px">Research prototype: not a medical device and not for clinical decisions. Data: Janesick et al., Nat Commun 2023 (GEO GSE243280). © 2026 Husain Naqvi. All Rights Reserved.</p></section>
+</main>
+</body>
+</html>
